@@ -1,4 +1,4 @@
-# filebrowser-s3: an AWS S3 fix for Mezzanine's media manager
+# filebrowser_s3: an AWS S3 fix for Mezzanine's media manager
 
 This app overrides the default Mezzanine filebrowser to do "the same but then using AWS S3".
 
@@ -7,17 +7,17 @@ This app overrides the default Mezzanine filebrowser to do "the same but then us
 Use pip:
 
 ```
-$> pip install filebrowser-s3
+$> pip install filebrowser_s3
 ```
 
-## Using filebrowser-s3 with Mezzanine
+## Using filebrowser_s3 with Mezzanine
 
 In your Mezzanine settings.py (or local settings file), add filebrowser_s3 as an installed app:
 
 ```
 INSTALLED_APPS = [
    ...,
-   'filebrowser-s3',
+   'filebrowser_s3',
 ]
 ```
 
@@ -31,7 +31,7 @@ TEMPLATES = [
             ...
             'libraries': {
             	...
-                's3thumbnails': 'filebrowser-s3.templatetags.s3thumbnails'
+                's3thumbnails': 'filebrowser_s3.templatetags.s3thumbnails'
             }
         },
     },
