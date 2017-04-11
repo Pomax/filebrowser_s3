@@ -17,7 +17,7 @@ In your Mezzanine settings.py (or local settings file), add filebrowser_s3 as an
 ```
 INSTALLED_APPS = [
    ...,
-   'filebrowser_s3',
+   'filebrowser-s3',
 ]
 ```
 
@@ -31,7 +31,7 @@ TEMPLATES = [
             ...
             'libraries': {
             	...
-                's3thumbnails': 'networkapi.filebrowser_s3.templatetags.s3thumbnails'
+                's3thumbnails': 'filebrowser-s3.templatetags.s3thumbnails'
             }
         },
     },
