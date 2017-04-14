@@ -51,5 +51,19 @@ else:
     MEDIA_ROOT = ...
     MEDIA_URL = ...
 ```
-
 Note that `FILEBROWSER_DIRECTORY` should typically be fixed to be an empty string. This variable is preassigned a value in default Mezzanine installations, but needs to be cleared explicitly when interfacing with S3. If you don't, its value will end up injected into your AWS bucket/file location and things will probably go wrong.
+
+## Variables documentation
+
+When using the s3 storage class, the variables required to be set are:
+
+- `DEFAULT_FILE_STORAGE`- This must be `filebrowser_s3.storage.S3MediaStorage` for obvious reasons.
+- `AWS_ACCESS_KEY_ID` - Your AWS access key.
+- `AWS_SECRET_ACCESS_KEY` - Your AWS secret.
+- `AWS_STORAGE_BUCKET_NAME` - The bucket name to use on your AWS account.
+- `AWS_STORAGE_ROOT` - The name of the "directory" to use in your bucket.
+- `AWS_S3_CUSTOM_DOMAIN` - Whatever custom domain you need used, such as "assets.mydomain.com".
+- `AWS_LOCATION` - an alias for `AWS_STORAGE_ROOT` currently used for templating purposes. This variable will likely be removed in a future release.
+- `MEDIA_URL` - The fully qualified domain URL that Mezzanine can link to. This includes the protocol and trailing slash, and so will typically be of the form `'https://' + AWS_S3_CUSTOM_DOMAIN + '/'`.
+- `MEDIA_ROOT` - The Mezzanine filesystem root. When using the S3 storage class this should be set to `''`.
+- `FILEBROWSER_DIRECTORY` - The filesystem directory used by Mezzanine's `filebrowser_safe`. When using the S3 storage class, this should be set to `''`.
