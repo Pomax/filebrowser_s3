@@ -80,20 +80,36 @@ def thumbnail(image_url, width, height, upscale=True, quality=95, left=.5,
         thumb_url,
     )
 
+    if settings.DEBUG:
+        print("s3thumbnails remote url:", remote_url)
+
     try:
         thumb_exists = os.path.exists(thumb_path)
+
     except UnicodeEncodeError:
         # The image that was saved to a filesystem with utf-8 support,
         # but somehow the locale has changed and the filesystem does not
         # support utf-8.
         from mezzanine.core.exceptions import FileSystemEncodingChanged
         raise FileSystemEncodingChanged()
+
     if thumb_exists:
         # Thumbnail exists, don't generate it.
+
+        if settings.DEBUG:
+            print("thumb_exists codepath")
+
         return remote_url
     elif not default_storage.exists(image_url):
         # Requested image does not exist, just return its URL.
+
+        if settings.DEBUG:
+            print("not default_storage.exists(image_url) codepath")
+
         return remote_url
+
+    if settings.DEBUG:
+        print("opening image url:", image_url)
 
     f = default_storage.open(image_url)
     try:
@@ -179,6 +195,10 @@ def thumbnail(image_url, width, height, upscale=True, quality=95, left=.5,
         if "://" in settings.MEDIA_URL:
             with open(thumb_path, "rb") as f:
                 default_storage.save(unquote(thumb_url), File(f))
+
+        if settings.DEBUG:
+            print("wrote thumb_url to disk:", thumb_url)
+
     except Exception:
         # If an error occurred, a corrupted image may have been saved,
         # so remove it, otherwise the check for it existing will just
@@ -187,5 +207,13 @@ def thumbnail(image_url, width, height, upscale=True, quality=95, left=.5,
             os.remove(thumb_path)
         except Exception:
             pass
+
+        if settings.DEBUG:
+            print("thumbnail writing exception")
+
         return remote_url
+
+    if settings.DEBUG:
+        print("using final remote_url:", remote_url)
+
     return remote_url
