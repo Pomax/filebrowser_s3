@@ -76,7 +76,7 @@ def thumbnail(image_url, width, height, upscale=True, quality=95, left=.5,
     # and it's returned in place of image_url.
     remote_url = "%s%s/%s" % (
         settings.MEDIA_URL,
-        settings.AWS_LOCATION,
+        settings.AWS_STORAGE_ROOT,
         thumb_url,
     )
 

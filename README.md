@@ -30,24 +30,24 @@ You will need to make sure that the correct storage class is used as `DEFAULT_FI
 USE_S3 = env('USE_S3')
 
 if USE_S3:
-    # use filebrowser_s3 rather than plain filebrowser_safe
     DEFAULT_FILE_STORAGE = 'filebrowser_s3.storage.S3MediaStorage'
 
     AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-    
-    AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')
-    AWS_LOCATION = env('AWS_STORAGE_ROOT', default=None)
+    AWS_STORAGE_ROOT = env('AWS_STORAGE_ROOT', default=None)
 
-    MEDIA_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + '/'
     MEDIA_ROOT = ''
-    
-    # Make sure to explicitly set this to an empty string
+
+    AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN', default=None)
+    if AWS_S3_CUSTOM_DOMAIN is None:
+        MEDIA_URL = '...your public AWS bucket URL with protocol and trailing slash'
+    else:
+        MEDIA_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + '/'
+
     FILEBROWSER_DIRECTORY = ''
 
 else:
-    # Otherwise leave Mezzanine to use the default filesystem storage
     MEDIA_ROOT = ...
     MEDIA_URL = ...
 ```
@@ -61,9 +61,8 @@ When using the s3 storage class, the variables required to be set are:
 - `AWS_ACCESS_KEY_ID` - Your AWS access key.
 - `AWS_SECRET_ACCESS_KEY` - Your AWS secret.
 - `AWS_STORAGE_BUCKET_NAME` - The bucket name to use on your AWS account.
-- `AWS_STORAGE_ROOT` - The name of the "directory" to use in your bucket.
+- `AWS_STORAGE_ROOT` - The name of the "root directory" in your bucket for media uploads.
 - `AWS_S3_CUSTOM_DOMAIN` - Whatever custom domain you need used, such as "assets.mydomain.com".
-- `AWS_LOCATION` - an alias for `AWS_STORAGE_ROOT` currently used for templating purposes. This variable will likely be removed in a future release.
-- `MEDIA_URL` - The fully qualified domain URL that Mezzanine can link to. This includes the protocol and trailing slash, and so will typically be of the form `'https://' + AWS_S3_CUSTOM_DOMAIN + '/'`.
 - `MEDIA_ROOT` - The Mezzanine filesystem root. When using the S3 storage class this should be set to `''`.
+- `MEDIA_URL` - The fully qualified domain URL that Mezzanine can link to. This includes the protocol and trailing slash, and so will typically be of the form `'https://' + AWS_S3_CUSTOM_DOMAIN + '/'`.
 - `FILEBROWSER_DIRECTORY` - The filesystem directory used by Mezzanine's `filebrowser_safe`. When using the S3 storage class, this should be set to `''`.
