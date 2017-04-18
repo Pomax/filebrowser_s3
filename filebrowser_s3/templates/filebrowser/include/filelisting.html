@@ -130,6 +130,7 @@ h1 {margin:-30px 0 15px 0;}
         {% endifequal %}
         {% ifequal file.filetype 'Folder' %}<br /><br />
         <strong>Is Empty</strong> {{ file.is_empty }}
+        <strong>MEDIA_URL</strong> {{ settings_var.MEDIA_URL }}
         {% endifequal %}
     </td>
     {% endif %}
