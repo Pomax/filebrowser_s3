@@ -73,7 +73,7 @@ h1 {margin:-30px 0 15px 0;}
     {% if results_var.images_total %}
     <td class="fb_icon">
         {% ifequal file.filetype 'Image' %}
-        <a href="{{ file.url }}" target="_blank"><img src="{{ settings_var.MEDIA_URL }}{% thumbnail file.path 60 60 %}" title="{% trans 'View Image' %}" /></a>
+        <a href="{{ file.url }}" target="_blank"><img src="{% thumbnail file.path 60 60 %}" title="{% trans 'View Image' %}" /></a>
         {% endifequal %}
     </td>
     {% endif %}
@@ -129,7 +129,7 @@ h1 {margin:-30px 0 15px 0;}
         <strong>Orientation</strong> {{ file.orientation }}
         {% endifequal %}
         {% ifequal file.filetype 'Folder' %}<br /><br />
-        <strong>Is Empty</strong> {{ file.is_empty }}
+        <strong>Is Empty</strong> {{ file.is_empty }}<br />
         <strong>MEDIA_URL</strong> {{ settings_var.MEDIA_URL }}
         {% endifequal %}
     </td>

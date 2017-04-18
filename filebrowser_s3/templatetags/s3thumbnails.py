@@ -74,20 +74,18 @@ def thumbnail(image_url, width, height, upscale=True, quality=95, left=.5,
     # The original tag returned image_url, but when you're using S3
     # you want to return the remote url. Here, we construct it
     # and it's returned in place of image_url.
+
+    BASE_MEDIA_URL = settings.MEDIA_URL
+    if settings.AWS_STORAGE_ROOT is '':
+        BASE_MEDIA_URL = BASE_MEDIA_URL.strip("/")
+
     remote_url = "%s%s/%s" % (
-        settings.MEDIA_URL,
+        BASE_MEDIA_URL,
         settings.AWS_STORAGE_ROOT,
         thumb_url,
     )
 
-    # Note that if AWS_STORAGE_ROOT is an empty string, the remote_url
-    # will now contain a trailing / from MEDIA_URL and leading / from
-    # the thumb_url, which gives use something.com//something, and S3
-    # will interpret anything after the initial separator as a literal,
-    # meaning it will try to find a file whose filename literally starts
-    # with / and we want to make sure to prevent that.
-    if AWS_STORAGE_ROOT is '':
-        remote_url = remote_url.replace('//', '/', 1)
+    print('---->', remote_url)
 
     if settings.DEBUG:
         print("s3thumbnails remote url:", remote_url)
