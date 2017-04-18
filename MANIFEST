@@ -4,4 +4,5 @@ setup.py
 filebrowser_s3/__init__.py
 filebrowser_s3/storage.py
 filebrowser_s3/templates/filebrowser/include/filelisting.html
+filebrowser_s3/templatetags/__init__.py
 filebrowser_s3/templatetags/s3thumbnails.py
