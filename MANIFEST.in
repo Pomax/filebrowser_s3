@@ -1,0 +1,2 @@
+recursive-include filebrowser_s3/templates *.html
+recursive-include filebrowser_s3/templatetags *.py
