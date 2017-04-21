@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
 	name="filebrowser_s3",
-	version="0.1.15",
+	version="0.1.17",
 	description="An S3 fix for Mezzanine's media manager.",
 	author = 'Mozilla Foundation',
 	author_email = 'pomax@mozillafoundation.org',
 	maintainer="Pomax",
 	maintainer_email="pomax@mozillafoundation.org",
 	url = 'https://github.com/Pomax/filebrowser_s3',
-	download_url = 'https://github.com/Pomax/filebrowser_s3/archive/0.1.15.tar.gz',
+	download_url = 'https://github.com/Pomax/filebrowser_s3/archive/0.1.17.tar.gz',
 	packages=find_packages(),
 	include_package_data=True,
 	zip_safe=False,
