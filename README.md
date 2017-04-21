@@ -35,7 +35,6 @@ if USE_S3:
     AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-    AWS_STORAGE_ROOT = env('AWS_STORAGE_ROOT', default=None)
 
     MEDIA_ROOT = ''
 
@@ -45,13 +44,12 @@ if USE_S3:
     else:
         MEDIA_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + '/'
 
-    FILEBROWSER_DIRECTORY = ''
+    FILEBROWSER_DIRECTORY = env('AWS_UPLOAD_DIRECTORY',default='')
 
 else:
     MEDIA_ROOT = ...
     MEDIA_URL = ...
 ```
-Note that `FILEBROWSER_DIRECTORY` should typically be fixed to be an empty string. This variable is preassigned a value in default Mezzanine installations, but needs to be cleared explicitly when interfacing with S3. If you don't, its value will end up injected into your AWS bucket/file location and things will probably go wrong.
 
 ## Variables documentation
 
@@ -61,8 +59,7 @@ When using the s3 storage class, the variables required to be set are:
 - `AWS_ACCESS_KEY_ID` - Your AWS access key.
 - `AWS_SECRET_ACCESS_KEY` - Your AWS secret.
 - `AWS_STORAGE_BUCKET_NAME` - The bucket name to use on your AWS account.
-- `AWS_STORAGE_ROOT` - The name of the "root directory" in your bucket for media uploads.
 - `AWS_S3_CUSTOM_DOMAIN` - Whatever custom domain you need used, such as "assets.mydomain.com".
 - `MEDIA_ROOT` - The Mezzanine filesystem root. When using the S3 storage class this should be set to `''`.
 - `MEDIA_URL` - The fully qualified domain URL that Mezzanine can link to. This includes the protocol and trailing slash, and so will typically be of the form `'https://' + AWS_S3_CUSTOM_DOMAIN + '/'`.
-- `FILEBROWSER_DIRECTORY` - The filesystem directory used by Mezzanine's `filebrowser_safe`. When using the S3 storage class, this should be set to `''`.
+- `FILEBROWSER_DIRECTORY` - The name of the "root directory" in your bucket for media uploads. Note that according to the filebrowser documentation on the Django website, this value should end in a trailing `/`
