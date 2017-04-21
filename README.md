@@ -44,7 +44,7 @@ if USE_S3:
     else:
         MEDIA_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + '/'
 
-    FILEBROWSER_DIRECTORY = env('AWS_UPLOAD_DIRECTORY',default='')
+    FILEBROWSER_DIRECTORY = env('AWS_UPLOAD_DIRECTORY', default='')
 
 else:
     MEDIA_ROOT = ...
