@@ -77,7 +77,7 @@ def thumbnail(image_url, width, height, upscale=True, quality=95, left=.5,
 
     BASE_MEDIA_URL = settings.MEDIA_URL.strip("/")
 
-    remote_url = "%s%s/%s" % (
+    remote_url = "%s/%s" % (
         BASE_MEDIA_URL,
         thumb_url,
     )
