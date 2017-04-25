@@ -71,16 +71,16 @@ def thumbnail(image_url, width, height, upscale=True, quality=95, left=.5,
     if image_url_path:
         thumb_url = "%s/%s" % (image_url_path, thumb_url)
 
-    # The original tag returned image_url, but when you're using S3
-    # you want to return the remote url. Here, we construct it
-    # and it's returned in place of image_url.
+    # The original tag returns a local image_url, but when you're using
+    # S3 you want to return the remote url. Here, we construct that URL.
 
-    BASE_MEDIA_URL = settings.MEDIA_URL.strip("/")
-
-    remote_url = "%s/%s" % (
-        BASE_MEDIA_URL,
+    terms = filter(None, [
+        settings.MEDIA_URL.strip("/"),
+        settings.AWS_LOCATION, # this might be an empty string, hence filter()
         thumb_url,
-    )
+    ])
+
+    remote_url = "/".join(terms)
 
     try:
         thumb_exists = os.path.exists(thumb_path)

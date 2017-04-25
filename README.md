@@ -36,6 +36,9 @@ if USE_S3:
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 
+    AWS_LOCATION = env('AWS_LOCATION')
+    FILEBROWSER_DIRECTORY = AWS_LOCATION
+
     MEDIA_ROOT = ''
 
     AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN', default=None)
@@ -44,7 +47,6 @@ if USE_S3:
     else:
         MEDIA_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + '/'
 
-    FILEBROWSER_DIRECTORY = env('AWS_UPLOAD_DIRECTORY', default='')
 
 else:
     MEDIA_ROOT = ...
@@ -53,7 +55,7 @@ else:
 
 ## Variables documentation
 
-When using the s3 storage class, the variables required to be set are:
+When using the s3 storage class, required setting variables are:
 
 - `DEFAULT_FILE_STORAGE`- This must be `filebrowser_s3.storage.S3MediaStorage` for obvious reasons.
 - `AWS_ACCESS_KEY_ID` - Your AWS access key.
@@ -62,4 +64,10 @@ When using the s3 storage class, the variables required to be set are:
 - `AWS_S3_CUSTOM_DOMAIN` - Whatever custom domain you need used, such as "assets.mydomain.com".
 - `MEDIA_ROOT` - The Mezzanine filesystem root. When using the S3 storage class this should be set to `''`.
 - `MEDIA_URL` - The fully qualified domain URL that Mezzanine can link to. This includes the protocol and trailing slash, and so will typically be of the form `'https://' + AWS_S3_CUSTOM_DOMAIN + '/'`.
-- `FILEBROWSER_DIRECTORY` - The name of the "root directory" in your bucket for media uploads. Note that according to the filebrowser documentation on the Django website, this value should end in a trailing `/`
+
+There are also two fairly special variables that must be specified:
+
+- `AWS_LOCATION` - Used by django-storages as your S3 "top level" directory for uploads.
+- `FILEBROWSER_DIRECTORY` - Used by filebrowser_safe as the "top level" directory in which to browse. 
+
+You typically want these two values to be the same. So that the media browser looks for uploaded images in the same top level "directory" that botos3 treats as top level upload path.
