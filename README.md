@@ -6,7 +6,7 @@ This app overrides the default Mezzanine filebrowser to do "the same but then us
 
 Use pip:
 
-```
+```bash
 $> pip install filebrowser_s3
 ```
 
@@ -14,7 +14,7 @@ $> pip install filebrowser_s3
 
 In your Mezzanine settings.py (or local settings file), add filebrowser_s3 as an installed app:
 
-```
+```python
 INSTALLED_APPS = [
    ...,
    'filebrowser_s3',
@@ -23,7 +23,7 @@ INSTALLED_APPS = [
 
 You will need to make sure that the correct storage class is used as `DEFAULT_FILE_STORAGE`. You could do this with a straight assignment, but conditional switching is recommended, as in the following example code assumes an `env()` function for intelligently fetching environment variables):
 
-```
+```python
 # Determine which storage solution to use. Typically, you
 # want filesystem storage for local dev work, but S3 storage
 # for staging/production instances.
