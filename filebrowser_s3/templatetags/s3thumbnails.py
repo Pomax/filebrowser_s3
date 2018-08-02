@@ -7,10 +7,10 @@ except ImportError:
 
 from django.core.files import File
 from django.core.files.storage import default_storage
-from mezzanine.conf import settings
-from mezzanine import template
+from django.conf import settings
+from django import template
 
-register = template.Library()
+register = template.Library(
 
 
 # This templatetag is a modified version of:
